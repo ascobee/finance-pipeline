@@ -1,0 +1,40 @@
+[project]
+name = "finance-pipeline"
+version = "0.1.0"
+description = "Personal finance data pipeline: PySpark medallion layers with LLM-assisted merchant categorization"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "pyspark==4.2.1",
+    "pydantic>=2.0",
+    "anthropic==2.3.0",
+]
+
+[dependency-groups]
+dashboard = [
+    "streamlit==1.66.1",
+    "pyarrow>=14",
+    "pandas>=2.0,<3.0.0",
+]
+dev = [
+    "pytest>=8.0",
+    "ruff==0.17.2",
+]
+
+[build-system]
+requires = ["setuptools>=84"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+src = ["src", "tests"]
+
+[tool.uv]
+default-groups = "all"

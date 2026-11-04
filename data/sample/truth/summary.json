@@ -1,0 +1,23 @@
+{
+  "seed": 42,
+  "unique_transactions": {
+    "checking": 60,
+    "credit_card": 309,
+    "total": 369
+  },
+  "exported_rows": {
+    "checking": 71,
+    "credit_card": 361,
+    "total": 432
+  },
+  "windows": [
+    [
+      "2025-01-01",
+      "2025-04-01"
+    ],
+    [
+      "2025-03-02",
+      "2025-06-30"
+    ]
+  ]
+}

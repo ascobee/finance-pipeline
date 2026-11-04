@@ -1,0 +1,33 @@
+# Never commit real financial data
+data/raw/
+data/bronze/
+data/silver/
+data/gold/
+data/private/
+*.csv
+!data/sample/**/*.csv
+!data/golden/synthetic_merchants.csv
+*.crc
+_SUCCESS
+*.parquet
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# Spark
+spark-warehouse/
+metastore_db/
+derby.log
+checkpoints/
+
+# Secrets
+.env
+
+# IDE
+.vscode/
+.idea/
