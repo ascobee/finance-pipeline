@@ -15,6 +15,7 @@ dashboard = [
     "streamlit==1.67.0",
     "pyarrow==26.0.1",
     "pandas>=2.0,<3.0.0",
+    "pandas-stubs~=2.3.3",
 ]
 dev = [
     "pytest==9.2.0",

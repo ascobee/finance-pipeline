@@ -96,51 +96,9 @@ def parse_file(bronze: DataFrame, source_account: str) -> DataFrame:
     )
 
 
-# def parse_checking(bronze: DataFrame) -> DataFrame:
-#     """Checking export: Date (MM/dd/yyyy), Description, Amount (signed), Balance."""
-#     return bronze.select(
-#         F.lit("checking").alias("source"),
-#         F.col("_source_file").alias("source_file"),
-#         txn_date_col(bronze.columns),
-#         # _cents("amount").alias("amount_cents"),
-#         _amount_cents(bronze.columns, True).alias("amount_cents"),
-#         F.col("description").alias("description_raw"),
-#         F.lit(None).cast("string").alias("bank_category"),
-#     )
-
-
 def _present(col_name: str) -> Column:
     """True when the cell holds something other than whitespace (NULL counts as blank)."""
     return F.coalesce(F.length(F.trim(F.col(col_name))) > 0, F.lit(False))
-
-
-# def _card_amount_cents(columns: list[str]) -> Column:
-#     """Signed cents (negative = money out) for either card export layout.
-#
-#     * Signed layout (``amount``): purchases are positive in the file, so the sign is flipped.
-#     * Split layout (``debit`` / ``credit``, both positive): a debit is a purchase and a credit
-#       is a payment or refund, so the result is ``credit - debit``. Exactly one side must be
-#       filled in and non-negative; a row with both, neither, or an unreadable value gets a NULL
-#       amount, which sends it to quarantine instead of guessing.
-#
-#     Bronze can hold both layouts at once (files from different times), so each row uses
-#     whichever columns it actually has.
-#     """
-#     layouts: list[Column] = []
-#     if "amount" in columns:
-#         layouts.append(-_cents("amount"))
-#     if {"debit", "credit"} <= set(columns):
-#         debit, credit = _cents("debit"), _cents("credit")
-#         layouts.append(
-#             F.when(_present("debit") & ~_present("credit") & (debit >= 0), -debit)
-#             .when(_present("credit") & ~_present("debit") & (credit >= 0), credit)
-#         )
-#     if not layouts:
-#         raise ValueError(
-#             "credit card export has neither an 'amount' column nor 'debit'/'credit' columns; "
-#             f"found: {', '.join(columns)}"
-#         )
-#     return F.coalesce(*layouts)
 
 
 def _amount_cents(df: DataFrame, is_checking: bool) -> Column:
@@ -172,22 +130,6 @@ def _amount_cents(df: DataFrame, is_checking: bool) -> Column:
             f"found: {', '.join(columns)}"
         )
     return F.coalesce(*layouts)
-
-
-# def parse_credit_card(bronze: DataFrame) -> DataFrame:
-#     """Card export (signed ``amount`` or split ``debit``/``credit``) -> common schema."""
-#     return bronze.select(
-#         F.lit("credit_card").alias("source"),
-#         F.col("_source_file").alias("source_file"),
-#         txn_date_col(bronze.columns),
-#         # _card_amount_cents(bronze.columns).alias("amount_cents"),
-#         _amount_cents(bronze.columns, False).alias("amount_cents"),
-#         F.col("description").alias("description_raw"),
-#         F.col("category").alias("bank_category"),
-#     )
-
-
-# PARSERS = {"checking": parse_checking, "credit_card": parse_credit_card}
 
 
 def split_valid(parsed: DataFrame) -> tuple[DataFrame, DataFrame]:

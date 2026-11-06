@@ -317,7 +317,7 @@ def _safe_cell(value):
 
 
 def transactions_csv(rows: list[dict]) -> str:
-    """CSV text for the download button. Text cells are neutralised; amounts stay numbers."""
+    """CSV text for the download button. Text cells are neutralized; amounts stay numbers."""
     import io
 
     out = io.StringIO()

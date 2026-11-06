@@ -3,10 +3,10 @@ import json
 from datetime import date
 
 import pytest
-from support import gold_records, row, sample_silver_rows
 
 from finpipe import dashboard_data as dd
 from finpipe.synthetic import write_sample
+from support import gold_records, sample_silver_rows
 
 
 def make_gold(tmp_path):

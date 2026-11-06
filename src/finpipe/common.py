@@ -7,18 +7,18 @@ from pyspark.sql import functions as F
 def check_column_exists(col_name: str, df_cols: list[str]) -> bool:
     return col_name in df_cols
 
+
 def one_col_exists(col_names: list[str], df_cols: list[str]) -> bool:
     return not set(col_names).isdisjoint(df_cols)
+
 
 def all_cols_exist(col_names: list[str], df_cols: list[str]) -> bool:
     return set(col_names) <= set(df_cols)
 
 
-# def existing_cols_from_list(col_names: list[str], df: DataFrame) -> list[Column]:
-#     return [F.col(c) for c in col_names if c in df.columns]
-
 def existing_cols_from_list(col_names: list[str], df_cols: list[str]) -> list[Column]:
     return [F.col(c) for c in col_names if c in df_cols]
+
 
 def existing_col_names_from_list(col_names: list[str], df_cols: list[str]) -> list[str]:
     return [c for c in col_names if c in df_cols]

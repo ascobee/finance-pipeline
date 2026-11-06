@@ -1,7 +1,7 @@
 """Fixed category taxonomy.
 
-The LLM categorizer (next milestone) must answer with one of these values, and the
-output is validated against this enum, so a hallucinated category can never reach gold.
+The LLM categorizer must answer with one of these values, and the output is
+validated against this enum, so a hallucinated category can never reach gold.
 """
 
 from enum import Enum

@@ -26,7 +26,6 @@ _PREFIX_RE = re.compile(
 
 # (pattern, canonical name). First match wins. Patterns run on the prefix-stripped,
 # upper-cased description.
-# _ALIASES: list[tuple[re.Pattern[str], str]] = [
 _ALIASES = [
     (re.compile(p), name)
     for p, name in [
