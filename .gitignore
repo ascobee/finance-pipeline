@@ -10,6 +10,7 @@ data/private/
 *.crc
 _SUCCESS
 *.parquet
+*.jsonl
 
 # Python
 __pycache__/
