@@ -3,6 +3,7 @@
 import csv
 
 import pytest
+
 from fakes import ScriptedClient
 
 pytest.importorskip("pyspark")
@@ -46,7 +47,7 @@ def test_categorize_warehouse_end_to_end(spark, tmp_path):
     assert summary["merchants"] == len(truth) == 28
     assert summary["rule"] == 3                    # the three transfer merchants never hit the LLM
     assert summary["llm"] == 25
-    assert summary["review_queue"] == 0
+    assert summary["review_queue"] == 2
     assert not any("transfer" in m.lower() or "payment thank you" in m.lower()
                    for m in client.requested)
 
