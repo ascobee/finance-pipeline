@@ -1,7 +1,7 @@
 """Anthropic API backend for the categorizer.
 
 Uses a forced tool call so the model must answer in a fixed JSON shape (category restricted to
-the :class:`Category` enum). That makes malformed output rare, but the categorizer still
+the :class:`categories.Category` enum). That makes malformed output rare, but the categorizer still
 validates every item, because the schema is a request, not a guarantee.
 
 Merchant names come from bank statements, which means they are untrusted text. They are sent

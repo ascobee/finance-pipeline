@@ -31,7 +31,6 @@ def run(raw_dir: str | Path, warehouse_dir: str | Path) -> dict:
     bronze_loaded: dict[str, int] = {}
     parsed_frames: list[DataFrame] = []
     for source in SOURCES:
-    # for source in SOURCES2:
         raw = read_raw(spark, raw_dir, source)
         bronze_path = str(warehouse / "bronze" / source)
         if raw is not None:
@@ -39,7 +38,6 @@ def run(raw_dir: str | Path, warehouse_dir: str | Path) -> dict:
         if (warehouse / "bronze" / source).exists():
             # mergeSchema: files appended at different times may have different columns
             bronze = spark.read.option("mergeSchema", True).parquet(bronze_path)
-            # parsed_frames.append(PARSERS[source](bronze))
             parsed_frames.append(parse_file(bronze, source))
 
     if not parsed_frames:
